@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.kooklen.mapper.WorkOrderManagementMapper">
+    
+    <resultMap type="WorkOrderManagement" id="WorkOrderManagementResult">
+        <result property="id"    column="id"    />
+        <result property="userid"    column="userid"    />
+        <result property="username"    column="username"    />
+        <result property="companyname"    column="companyname"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="state"    column="state"    />
+        <result property="legalpeople"    column="legalpeople"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="code"    column="code"    />
+        <result property="contactphone"    column="contactphone"    />
+        <result property="note"    column="note"    />
+        <result property="orderid"    column="orderid"    />
+        <result property="finaltime"    column="finaltime"    />
+    </resultMap>
+
+    <sql id="selectWorkOrderManagementVo">
+        select id, userid, username, companyname, createtime, state, legalpeople, province, city, code, contactphone, note, orderid, finaltime from work_order_management
+    </sql>
+
+    <select id="selectWorkOrderManagementList" parameterType="WorkOrderManagement" resultMap="WorkOrderManagementResult">
+        <include refid="selectWorkOrderManagementVo"/>
+        <where>  
+            <if test="userid != null "> and userid = #{userid}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="companyname != null  and companyname != ''"> and companyname like concat('%', #{companyname}, '%')</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="legalpeople != null  and legalpeople != ''"> and legalpeople = #{legalpeople}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="code != null "> and code = #{code}</if>
+            <if test="contactphone != null  and contactphone != ''"> and contactphone = #{contactphone}</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+            <if test="orderid != null "> and orderid = #{orderid}</if>
+            <if test="finaltime != null "> and finaltime = #{finaltime}</if>
+        </where>
+    </select>
+    
+    <select id="selectWorkOrderManagementById" parameterType="Long" resultMap="WorkOrderManagementResult">
+        <include refid="selectWorkOrderManagementVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertWorkOrderManagement" parameterType="WorkOrderManagement" useGeneratedKeys="true" keyProperty="id">
+        insert into work_order_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userid != null">userid,</if>
+            <if test="username != null">username,</if>
+            <if test="companyname != null">companyname,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="state != null">state,</if>
+            <if test="legalpeople != null">legalpeople,</if>
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="code != null">code,</if>
+            <if test="contactphone != null">contactphone,</if>
+            <if test="note != null">note,</if>
+            <if test="orderid != null">orderid,</if>
+            <if test="finaltime != null">finaltime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userid != null">#{userid},</if>
+            <if test="username != null">#{username},</if>
+            <if test="companyname != null">#{companyname},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="state != null">#{state},</if>
+            <if test="legalpeople != null">#{legalpeople},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="code != null">#{code},</if>
+            <if test="contactphone != null">#{contactphone},</if>
+            <if test="note != null">#{note},</if>
+            <if test="orderid != null">#{orderid},</if>
+            <if test="finaltime != null">#{finaltime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWorkOrderManagement" parameterType="WorkOrderManagement">
+        update work_order_management
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userid != null">userid = #{userid},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="companyname != null">companyname = #{companyname},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="legalpeople != null">legalpeople = #{legalpeople},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="contactphone != null">contactphone = #{contactphone},</if>
+            <if test="note != null">note = #{note},</if>
+            <if test="orderid != null">orderid = #{orderid},</if>
+            <if test="finaltime != null">finaltime = #{finaltime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWorkOrderManagementById" parameterType="Long">
+        delete from work_order_management where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkOrderManagementByIds" parameterType="String">
+        delete from work_order_management where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

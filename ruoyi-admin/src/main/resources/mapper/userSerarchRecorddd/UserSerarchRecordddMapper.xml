@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.kooklen.mapper.UserSerarchRecordddMapper">
+    
+    <resultMap type="UserSerarchRecorddd" id="UserSerarchRecordddResult">
+        <result property="userid"    column="userid"    />
+        <result property="username"    column="username"    />
+        <result property="starttime"    column="starttime"    />
+        <result property="searchfunction"    column="searchfunction"    />
+        <result property="endtime"    column="endtime"    />
+        <result property="monitorf"    column="monitorf"    />
+        <result property="id"    column="id"    />
+        <result property="password"    column="password"    />
+    </resultMap>
+
+    <sql id="selectUserSerarchRecordddVo">
+        select userid, username, starttime, searchfunction, endtime, monitorf, id, password from user_serarch_recorddd
+    </sql>
+
+    <select id="selectUserSerarchRecordddList" parameterType="UserSerarchRecorddd" resultMap="UserSerarchRecordddResult">
+        <include refid="selectUserSerarchRecordddVo"/>
+        <where>  
+            <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="params.beginStarttime != null and params.beginStarttime != '' and params.endStarttime != null and params.endStarttime != ''"> and starttime between #{params.beginStarttime} and #{params.endStarttime}</if>
+            <if test="searchfunction != null "> and searchfunction = #{searchfunction}</if>
+            <if test="endtime != null "> and endtime like concat('%', #{endtime}, '%')</if>
+            <if test="monitorf != null "> and monitorf = #{monitorf}</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserSerarchRecordddById" parameterType="Long" resultMap="UserSerarchRecordddResult">
+        <include refid="selectUserSerarchRecordddVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUserSerarchRecorddd" parameterType="UserSerarchRecorddd" useGeneratedKeys="true" keyProperty="id">
+        insert into user_serarch_recorddd
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userid != null">userid,</if>
+            <if test="username != null">username,</if>
+            <if test="starttime != null">starttime,</if>
+            <if test="searchfunction != null">searchfunction,</if>
+            <if test="endtime != null">endtime,</if>
+            <if test="monitorf != null">monitorf,</if>
+            <if test="password != null">password,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userid != null">#{userid},</if>
+            <if test="username != null">#{username},</if>
+            <if test="starttime != null">#{starttime},</if>
+            <if test="searchfunction != null">#{searchfunction},</if>
+            <if test="endtime != null">#{endtime},</if>
+            <if test="monitorf != null">#{monitorf},</if>
+            <if test="password != null">#{password},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserSerarchRecorddd" parameterType="UserSerarchRecorddd">
+        update user_serarch_recorddd
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userid != null">userid = #{userid},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="starttime != null">starttime = #{starttime},</if>
+            <if test="searchfunction != null">searchfunction = #{searchfunction},</if>
+            <if test="endtime != null">endtime = #{endtime},</if>
+            <if test="monitorf != null">monitorf = #{monitorf},</if>
+            <if test="password != null">password = #{password},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserSerarchRecordddById" parameterType="Long">
+        delete from user_serarch_recorddd where id = #{id}
+    </delete>
+
+    <delete id="deleteUserSerarchRecordddByIds" parameterType="String">
+        delete from user_serarch_recorddd where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

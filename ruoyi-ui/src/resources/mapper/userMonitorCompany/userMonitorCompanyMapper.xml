@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.test.mapper.userMonitorCompanyMapper">
+
+    <resultMap type="userMonitorCompany" id="userMonitorCompanyResult">
+        <result property="userid"    column="userid"    />
+        <result property="username"    column="username"    />
+        <result property="companyid"    column="companyid"    />
+        <result property="recordnumber"    column="recordnumber"    />
+        <result property="companyname"    column="companyname"    />
+        <result property="monitortime"    column="monitortime"    />
+    </resultMap>
+
+    <sql id="selectuserMonitorCompanyVo">
+        select userid, username, companyid, recordnumber, companyname, monitortime from user_monitor_company
+    </sql>
+
+    <select id="selectuserMonitorCompanyList" parameterType="userMonitorCompany" resultMap="userMonitorCompanyResult">
+        <include refid="selectuserMonitorCompanyVo"/>
+        <where>
+            <if test="userid != null "> and userid = #{userid}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="companyid != null "> and companyid = #{companyid}</if>
+            <if test="recordnumber != null "> and recordnumber = #{recordnumber}</if>
+            <if test="companyname != null  and companyname != ''"> and companyname like concat('%', #{companyname}, '%')</if>
+            <if test="monitortime != null "> and monitortime = #{monitortime}</if>
+        </where>
+    </select>
+
+    <select id="selectuserMonitorCompanyByRecordnumber" parameterType="Long" resultMap="userMonitorCompanyResult">
+        <include refid="selectuserMonitorCompanyVo"/>
+        where recordnumber = #{recordnumber}
+    </select>
+
+    <insert id="insertuserMonitorCompany" parameterType="userMonitorCompany" useGeneratedKeys="true" keyProperty="recordnumber">
+        insert into user_monitor_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userid != null">userid,</if>
+            <if test="username != null">username,</if>
+            <if test="companyid != null">companyid,</if>
+            <if test="companyname != null">companyname,</if>
+            <if test="monitortime != null">monitortime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userid != null">#{userid},</if>
+            <if test="username != null">#{username},</if>
+            <if test="companyid != null">#{companyid},</if>
+            <if test="companyname != null">#{companyname},</if>
+            <if test="monitortime != null">#{monitortime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateuserMonitorCompany" parameterType="userMonitorCompany">
+        update user_monitor_company
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userid != null">userid = #{userid},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="companyid != null">companyid = #{companyid},</if>
+            <if test="companyname != null">companyname = #{companyname},</if>
+            <if test="monitortime != null">monitortime = #{monitortime},</if>
+        </trim>
+        where recordnumber = #{recordnumber}
+    </update>
+
+    <delete id="deleteuserMonitorCompanyByRecordnumber" parameterType="Long">
+        delete from user_monitor_company where recordnumber = #{recordnumber}
+    </delete>
+
+    <delete id="deleteuserMonitorCompanyByRecordnumbers" parameterType="String">
+        delete from user_monitor_company where recordnumber in
+        <foreach item="recordnumber" collection="array" open="(" separator="," close=")">
+            #{recordnumber}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.kooklen.mapper.userAccountManagementMapper">
+    
+    <resultMap type="userAccountManagement" id="userAccountManagementResult">
+        <result property="userid"    column="userid"    />
+        <result property="username"    column="username"    />
+        <result property="region"    column="region"    />
+        <result property="starttime"    column="starttime"    />
+        <result property="endtime"    column="endtime"    />
+        <result property="password"    column="password"    />
+        <result property="searchfunction"    column="searchfunction"    />
+        <result property="monitorfunction"    column="monitorfunction"    />
+        <result property="generateid"    column="generateid"    />
+    </resultMap>
+
+    <sql id="selectuserAccountManagementVo">
+        select userid, username, region, starttime, endtime, password, searchfunction, monitorfunction, generateid from user_account_management
+    </sql>
+
+    <select id="selectuserAccountManagementList" parameterType="userAccountManagement" resultMap="userAccountManagementResult">
+        <include refid="selectuserAccountManagementVo"/>
+        <where>  
+            <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="region != null  and region != ''"> and region = #{region}</if>
+            <if test="starttime != null "> and starttime = #{starttime}</if>
+            <if test="endtime != null "> and endtime = #{endtime}</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="searchfunction != null "> and searchfunction = #{searchfunction}</if>
+            <if test="monitorfunction != null "> and monitorfunction = #{monitorfunction}</if>
+            <if test="generateid != null "> and generateid = #{generateid}</if>
+        </where>
+    </select>
+    
+    <select id="selectuserAccountManagementByUserid" parameterType="String" resultMap="userAccountManagementResult">
+        <include refid="selectuserAccountManagementVo"/>
+        where userid = #{userid}
+    </select>
+        
+    <insert id="insertuserAccountManagement" parameterType="userAccountManagement">
+        insert into user_account_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userid != null and userid != ''">userid,</if>
+            <if test="username != null and username != ''">username,</if>
+            <if test="region != null and region != ''">region,</if>
+            <if test="starttime != null">starttime,</if>
+            <if test="endtime != null">endtime,</if>
+            <if test="password != null and password != ''">password,</if>
+            <if test="searchfunction != null">searchfunction,</if>
+            <if test="monitorfunction != null">monitorfunction,</if>
+            <if test="generateid != null">generateid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userid != null and userid != ''">#{userid},</if>
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="region != null and region != ''">#{region},</if>
+            <if test="starttime != null">#{starttime},</if>
+            <if test="endtime != null">#{endtime},</if>
+            <if test="password != null and password != ''">#{password},</if>
+            <if test="searchfunction != null">#{searchfunction},</if>
+            <if test="monitorfunction != null">#{monitorfunction},</if>
+            <if test="generateid != null">#{generateid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateuserAccountManagement" parameterType="userAccountManagement">
+        update user_account_management
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="region != null and region != ''">region = #{region},</if>
+            <if test="starttime != null">starttime = #{starttime},</if>
+            <if test="endtime != null">endtime = #{endtime},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="searchfunction != null">searchfunction = #{searchfunction},</if>
+            <if test="monitorfunction != null">monitorfunction = #{monitorfunction},</if>
+            <if test="generateid != null">generateid = #{generateid},</if>
+        </trim>
+        where userid = #{userid}
+    </update>
+
+    <delete id="deleteuserAccountManagementByUserid" parameterType="String">
+        delete from user_account_management where userid = #{userid}
+    </delete>
+
+    <delete id="deleteuserAccountManagementByUserids" parameterType="String">
+        delete from user_account_management where userid in 
+        <foreach item="userid" collection="array" open="(" separator="," close=")">
+            #{userid}
+        </foreach>
+    </delete>
+</mapper>

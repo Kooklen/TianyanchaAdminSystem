@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.userService.mapper.userLoginMapper">
+
+    <select id="login" resultType="com.ruoyi.userService.domin.userLogin" >
+        SELECT * from user_serarch_recorddd where userid = #{userid} AND password = #{password}
+    </select>
+</mapper>
