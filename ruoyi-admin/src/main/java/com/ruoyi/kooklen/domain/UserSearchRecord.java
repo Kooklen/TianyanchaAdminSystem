@@ -38,8 +38,8 @@ public class UserSearchRecord extends BaseEntity
     private String companyname;
 
     /** 搜索时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "搜索时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd-hh-mm-ss")
+    @Excel(name = "搜索时间", width = 30, dateFormat = "yyyy-MM-dd-hh-mm-ss")
     private Date searchtime;
 
     /** 状态 */

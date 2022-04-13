@@ -37,25 +37,25 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="公司名" prop="companyname">
+      <el-form-item label="企业名" prop="companyname">
         <el-input
-          v-model="queryParams.companyname"
-          placeholder="请输入公司名"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
+            v-model="queryParams.companyname"
+            placeholder="请输入企业名"
+            clearable
+            size="small"
+            @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="下载时间时间">
+      <el-form-item label="搜索时间">
         <el-date-picker
-          v-model="daterangeSearchtime"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+            v-model="daterangeSearchtime"
+            size="small"
+            style="width: 240px"
+            value-format="yyyy-MM-dd"
+            type="daterange"
+            range-separator="-"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="状态" prop="state">
@@ -121,23 +121,23 @@
     </el-row>
 
     <el-table v-loading="loading" :data="userSearchRecordList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="记录号" align="center" width="60" prop="recordnumber" />
-      <el-table-column label="用户ID" align="center" prop="userid" />
-      <el-table-column label="用户名" align="center" prop="username" />
-      <el-table-column label="下载企业ID" align="center" prop="companyid" />
-      <el-table-column label="下载企业" align="center" prop="companyname" />
-      <el-table-column label="下载时间" align="center" prop="searchtime" width="180">
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="记录号" align="center" width="60" prop="recordnumber"/>
+      <el-table-column label="用户ID" align="center" prop="userid"/>
+      <el-table-column label="用户名" align="center" prop="username"/>
+      <el-table-column label="搜索企业ID" align="center" prop="companyid"/>
+      <el-table-column label="搜索企业名" align="center" prop="companyname"/>
+      <el-table-column label="搜索时间" align="center" prop="searchtime" width="180">
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="state" />
+      <el-table-column label="状态" align="center" prop="state"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-edit"-->
-<!--            @click="handleUpdate(scope.row)"-->
-<!--            v-hasPermi="['userSearchRecord:userSearchRecord:edit']"-->
+          <!--          <el-button-->
+          <!--            size="mini"-->
+          <!--            type="text"-->
+          <!--            icon="el-icon-edit"-->
+          <!--            @click="handleUpdate(scope.row)"-->
+          <!--            v-hasPermi="['userSearchRecord:userSearchRecord:edit']"-->
 <!--          >修改</el-button>-->
           <el-button
             size="mini"
@@ -175,10 +175,11 @@
         </el-form-item>
         <el-form-item label="搜索时间" prop="searchtime">
           <el-date-picker clearable size="small"
-            v-model="form.searchtime"
-            type="datetime"
-            value-format="yyyy-MM-dd-mm-ss"
-            placeholder="选择下载时间">
+                          v-model="form.searchtime"
+                          type="datetime"
+                          value-format="yyyy-MM-dd-mm-ss"
+                          placeholder="选择搜索时间"
+          >
           </el-date-picker>
         </el-form-item>
         <el-form-item label="状态" prop="state">
@@ -258,8 +259,9 @@ export default {
             response.rows[i].state="成功"
           }
         }
-        this.userSearchRecordList = response.rows;
-        this.total = response.total;
+        this.userSearchRecordList = response.rows
+        console.log(response.rows)
+        this.total = response.total
         this.loading = false;
       });
     },
